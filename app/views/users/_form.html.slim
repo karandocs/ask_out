@@ -1,0 +1,14 @@
+= simple_form_for(@user) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :first_name
+    = f.input :last_name
+    = f.input :mobile
+    = f.input :gender, as: :select, collection: ['male', 'female']
+    = f.input :dob
+    = f.input :college
+    = f.input :about
+
+  .form-actions
+    = f.button :submit

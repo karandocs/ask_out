@@ -1,0 +1,38 @@
+p#notice = notice
+
+p
+  strong First name:
+  = @user.first_name
+p
+  strong Last name:
+  = @user.last_name
+p
+  strong Mobile:
+  = @user.mobile
+p
+  strong Gender:
+  = @user.gender
+p
+  strong Dob:
+  = @user.dob
+p
+  strong College:
+  = @user.college
+p
+  strong About:
+  = @user.about
+- if @user.try(:gender) == 'male'
+  - if current_user.crushes.where(match_to_id: @user.id).present?
+    button.btn.btn-primary Ask him
+  - else
+    button.btn.btn-success Ask him
+- else
+  - if current_user.crushes.where(match_to_id: @user.id).present?
+    button.btn.btn-primary Ask her
+  - else
+    button.btn.btn-success Ask her
+    = current_user.first_name
+br
+= link_to 'Edit', edit_user_path(@user)
+'  |
+= link_to 'Back', users_path
