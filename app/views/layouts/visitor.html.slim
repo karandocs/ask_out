@@ -10,7 +10,7 @@
           span.icon-bar
         a.navbar-brand href="#"  AskOut
       /! Collect the nav links, forms, and other content for toggling
-      #bs-example-navbar-collapse-1.collapse.navbar-collapse  
+      #bs-example-navbar-collapse-1.collapse.navbar-collapse
         form.navbar-form.navbar-left
           .form-group
             input.form-control placeholder="Search" type="text" /
@@ -23,17 +23,14 @@
               | Notifications
               span.caret
             ul.dropdown-menu
-              li
-                a href="#"  Action
-              li
-                a href="#"  Another action
-              li
-                a href="#"  Something else here
-              li.divider role="separator"
-              li
-                a href="#"  Separated link
+              - if current_user.notifications.present?
+                - current_user.notifications.where(read: false).where.not(linkable_type: nil).last(5).each do |notification|
+                  li
+                    = link_to word_wrap(notification.text, :line_width => 10).gsub("\n", "\n    "), controller: notification.linkable_type.pluralize.downcase, action: 'show', id: notification.linkable_id
+              - else
+                li
+                  a No notifications
       /! /.navbar-collapse
     /! /.container-fluid
-
-
-  = yield
+  .container-fluid
+    = yield
